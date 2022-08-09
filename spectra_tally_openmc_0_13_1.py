@@ -1,11 +1,11 @@
 import openmc
+import matplotlib.pyplot as plt
 
 # MATERIALS
 
-
 my_material = openmc.Material.from_(name='Concrete Portland')
 
-mats = openmc.Materials([my_material])
+my_materials = openmc.Materials([my_material])
 
 
 # GEOMETRY
@@ -18,18 +18,18 @@ my_geometry = openmc.Geometry(root=bound_dag_univ)
 # SIMULATION SETTINGS
 
 # Instantiate a Settings object
-sett = openmc.Settings()
-sett.batches = 10
-sett.inactive = 0 # the default is 10, which would be wasted computing for us
-sett.particles = 1000
-sett.run_mode = 'fixed source'
+my_settings = openmc.Settings()
+my_settings.batches = 10
+my_settings.inactive = 0 # the default is 10, which would be wasted computing for us
+my_settings.particles = 1000
+my_settings.run_mode = 'fixed source'
 
 # Create a DT point source
 source = openmc.Source()
 source.space = openmc.stats.Point((0, 0, 0))
 source.angle = openmc.stats.Isotropic()
 source.energy = openmc.stats.Discrete([14e6], [1])
-sett.source = source
+my_settings.source = source
 
 
 # sets up filters for the tallies
@@ -40,13 +40,13 @@ material_filter = openmc.MaterialFilter(my_material)
 # create the tally
 cell_spectra_tally = openmc.Tally(name='cell_spectra_tally')
 cell_spectra_tally.scores = ['flux']
-cell_spectra_tally.filters = [cell_filter, neutron_particle_filter, energy_filter]
+cell_spectra_tally.filters = [material_filter, neutron_particle_filter, energy_filter]
 
-tallies = openmc.Tallies([cell_spectra_tally])
+my_tallies = openmc.Tallies([cell_spectra_tally])
 
 
 # combine all the required parts to make a model
-model = openmc.model.Model(my_geometry, mats, sett, tallies)
+model = openmc.model.Model(my_geometry, my_materials, my_settings, my_tallies)
 
 results_filename = model.run()
 
@@ -56,19 +56,17 @@ results = openmc.StatePoint(results_filename)
 #extracts the tally values from the simulation results
 cell_tally = results.get_tally(name='cell_spectra_tally')
 
-import matplotlib.pyplot as plt
 
 results = openmc.StatePoint(results_filename)
 cell_tally = results.get_tally(name='cell_spectra_tally')
 energy_filter = cell_tally.find_filter(filter_type=openmc.filter.EnergyFilter)
 
 bin_boundaries = energy_filter.lethargy_bin_width()
-flux = cell_tally.mean.flatten()
-norm_flux = flux / bin_boundaries
+norm_flux = cell_tally.mean.flatten() / bin_boundaries
 
 plt.figure()
 plt.step(energy_filter.values[:-1], norm_flux)
 plt.xscale('log')
 plt.yscale('log')
-plt.ylable('Flux per unit lethargy [n/cm2-s]')
+plt.ylabel('Flux per unit lethargy [n/cm2-s]')
 plt.show()

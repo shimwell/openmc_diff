@@ -2,7 +2,6 @@ import openmc
 
 # MATERIALS
 
-# Due to the hydrogen content water is a very good neutron moderator
 my_material = openmc.Material(name='water')
 my_material.add_element('H', 1, percent_type='ao')
 my_material.add_element('O', 2, percent_type='ao')
