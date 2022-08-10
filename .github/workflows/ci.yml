@@ -31,7 +31,9 @@ jobs:
           mamba install make -y
           mamba install binutils -y
           mamba install -c conda-forge dagmc=3.2.2 -y
-          git clone --single-branch --branch develop --depth 1 https://github.com/openmc-dev/openmc.git
+          # git clone --single-branch --branch develop --depth 1 https://github.com/openmc-dev/openmc.git
+          # this branch is upto date with develop, but contains material.from_library
+          git clone --single-branch --branch adding_material_from_library --depth 1 https://github.com/shimwell/openmc.git
           cd openmc
           mkdir build
           cd build
@@ -40,8 +42,12 @@ jobs:
           make -j2 install
           cd ..
           pip install .
+          pip install openmc_data_downloader
+          openmc_data_downloader -l TENDL-2019 -e H C O Na Mg Al Si K Ca Fe
 
       - name: Run simulation 
+        env:
+          OPENMC_CROSS_SECTIONS : /__w/openmc_diff/openmc_diff/openmc/cross_sections.xml
         run: |
           python spectra_tally_openmc_0_13_1.py
 

@@ -13,6 +13,8 @@ my_materials = openmc.Materials([my_material])
 # GEOMETRY
 
 bound_dag_univ = openmc.DAGMCUniverse("dagmc.h5m", auto_geom_ids=True).bounded_universe()
+# todo once in the develop branch
+# bound_dag_univ = openmc.DAGMCUniverse("dagmc.h5m", ).bounded_universe()
 
 my_geometry = openmc.Geometry(root=bound_dag_univ)
 
@@ -63,7 +65,7 @@ cell_tally = results.get_tally(name="cell_spectra_tally")
 energy_filter = cell_tally.find_filter(filter_type=openmc.filter.EnergyFilter)
 
 # lethargy normalization values are now easily accessible
-norm_flux = cell_tally.mean.flatten() / energy_filter.lethargy_bin_width()
+norm_flux = cell_tally.mean.flatten() / energy_filter.lethargy_bin_width
 
 plt.figure()
 plt.step(energy_filter.values[:-1], norm_flux)
