@@ -1,6 +1,6 @@
 # Demonstration of user API improvements in OpenMC
 
-todo badge for ci
+[![CI](https://github.com/shimwell/openmc_diff/actions/workflows/ci.yml/badge.svg)](https://github.com/shimwell/openmc_diff/actions/workflows/ci.yml)
 
 ## Neutron spectra analysis
 
