@@ -10,7 +10,9 @@ RUN apt-get --yes update && apt-get --yes upgrade
 RUN conda config --add channels conda-forge
 RUN conda config --set channel_priority strict
 
-RUN git clone --single-branch --branch develop --depth 1 https://github.com/openmc-dev/openmc.git
+# RUN git clone --single-branch --branch develop --depth 1 https://github.com/openmc-dev/openmc.git
+# this branch is upto date with develop, but contains material.from_library
+RUN git clone --single-branch --branch adding_material_from_library --depth 1 https://github.com/shimwell/openmc.git
 
 # using mamba to avoid tempest error in conda install dagmc
 RUN conda install mamba -y
