@@ -31,7 +31,9 @@ jobs:
           mamba install make -y
           mamba install binutils -y
           mamba install -c conda-forge dagmc=3.2.2 -y
-          git clone --single-branch --branch develop --depth 1 https://github.com/openmc-dev/openmc.git
+          # git clone --single-branch --branch develop --depth 1 https://github.com/openmc-dev/openmc.git
+          # this branch is upto date with develop, but contains material.from_library
+          git clone --single-branch --branch adding_material_from_library --depth 1 https://github.com/shimwell/openmc.git
           cd openmc
           mkdir build
           cd build
