@@ -42,6 +42,8 @@ my_geometry = openmc.Geometry(root=[containing_cell])
 
 # Instantiate a Settings object
 my_settings = openmc.Settings()
+# TODO add once merged in
+# my_settings = openmc.Settings(batches = 10, particles = 1000, run_mode = "fixed source")
 my_settings.batches = 10
 my_settings.inactive = 0  # the default is 10
 my_settings.particles = 1000
