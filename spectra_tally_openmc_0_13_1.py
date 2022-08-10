@@ -65,7 +65,7 @@ cell_tally = results.get_tally(name="cell_spectra_tally")
 energy_filter = cell_tally.find_filter(filter_type=openmc.filter.EnergyFilter)
 
 # lethargy normalization values are now easily accessible
-norm_flux = cell_tally.mean.flatten() / energy_filter.lethargy_bin_width()
+norm_flux = cell_tally.mean.flatten() / energy_filter.lethargy_bin_width
 
 plt.figure()
 plt.step(energy_filter.values[:-1], norm_flux)
