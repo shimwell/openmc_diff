@@ -42,6 +42,8 @@ jobs:
           make -j2 install
           cd ..
           pip install .
+          pip install openmc_data_downloader
+          openmc_data_downloader -l TENDL-2019 -e H C O Na Mg Al Si K Ca Fe
 
       - name: Run simulation 
         run: |
