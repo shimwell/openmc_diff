@@ -1,0 +1,48 @@
+
+# This CI will build openmc with dagmc using the development branches of both
+
+name: CI with install
+    container:
+      image: continuumio/miniconda3:4.12.0
+on:
+  pull_request:
+    branches:
+      - develop
+      - main
+
+jobs:
+  testing:
+    runs-on: ubuntu-latest
+    container:
+      image: continuumio/miniconda3:4.12.0
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: install dependencies
+        run: |
+          apt-get --allow-releaseinfo-change update
+          apt-get update -y
+          apt-get upgrade -y
+          conda config --add channels conda-forge
+          conda config --set channel_priority strict
+          conda install mamba -y
+          mamba install gxx -y
+          mamba install cmake -y
+          mamba install make -y
+          mamba install binutils -y
+          mamba install -c conda-forge dagmc=3.2.2 -y
+          git clone --single-branch --branch develop --depth 1 https://github.com/openmc-dev/openmc.git
+          cd openmc
+          mkdir build
+          cd build
+          cmake -Doptimize=on -Ddagmc=ON -DHDF5_PREFER_PARALLEL=off ..
+          make -j2
+          make -j2 install
+          cd ..
+          pip install .
+
+      - name: Run simulation 
+        run: |
+          python spectra_tally_openmc_0_13_1.py
+
