@@ -44,6 +44,8 @@ jobs:
           pip install .
           pip install openmc_data_downloader
           openmc_data_downloader -l TENDL-2019 -e H C O Na Mg Al Si K Ca Fe
+        env:
+          OPENMC_CROSS_SECTIONS environmental : /__w/openmc_diff/openmc_diff/openmc/cross_sections.xml
 
       - name: Run simulation 
         run: |
