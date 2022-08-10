@@ -30,9 +30,7 @@ RUN git clone --single-branch --branch adding_material_from_library --depth 1 ht
 RUN cd openmc && \
     mkdir build && \
     cd build && \
-    cmake -Doptimize=on \
-          -Ddagmc=ON \
-          -DHDF5_PREFER_PARALLEL=off ..  && \
+    cmake -DOPENMC_USE_DAGMC=ON .. && \
     make -j && \
     make -j install && \
     cd /openmc/ && \

@@ -37,7 +37,7 @@ jobs:
           cd openmc
           mkdir build
           cd build
-          cmake -Doptimize=on -Ddagmc=ON -DHDF5_PREFER_PARALLEL=off ..
+          cmake -DOPENMC_USE_DAGMC=ON ..
           make -j2
           make -j2 install
           cd ..
