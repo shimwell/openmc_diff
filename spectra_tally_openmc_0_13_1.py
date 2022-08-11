@@ -12,7 +12,7 @@ my_materials = openmc.Materials([my_material])
 
 # GEOMETRY
 
-bound_dag_univ = openmc.DAGMCUniverse("dagmc.h5m", auto_geom_ids=True).bounded_universe()
+bound_dag_univ = openmc.DAGMCUniverse("dagmc.h5m").bounded_universe()
 # todo once in the develop branch
 # bound_dag_univ = openmc.DAGMCUniverse("dagmc.h5m", ).bounded_universe()
 
