@@ -9,15 +9,6 @@ import openmc
 # my_material.name = "mat1"  # renaming to match the contents of the dagmc h5m tags
 my_material = openmc.Material(name="mat1")
 my_material.add_element("H", 0.168759, percent_type="ao")
-my_material.add_element("C", 0.001416, percent_type="ao")
-my_material.add_element("O", 0.562524, percent_type="ao")
-my_material.add_element("Na", 0.011838, percent_type="ao")
-my_material.add_element("Mg", 0.0014, percent_type="ao")
-my_material.add_element("Al", 0.021354, percent_type="ao")
-my_material.add_element("Si", 0.204115, percent_type="ao")
-my_material.add_element("K", 0.005656, percent_type="ao")
-my_material.add_element("Ca", 0.018674, percent_type="ao")
-my_material.add_element("Fe", 0.004264, percent_type="ao")
 my_material.set_density("g/cm3", 2.3)
 
 
