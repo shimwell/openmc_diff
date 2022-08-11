@@ -12,21 +12,16 @@ my_materials = openmc.Materials([my_material])
 
 # GEOMETRY
 
-bound_dag_univ = openmc.DAGMCUniverse("dagmc.h5m", auto_geom_ids=True).bounded_universe()
-# todo once in the develop branch
-# bound_dag_univ = openmc.DAGMCUniverse("dagmc.h5m", ).bounded_universe()
+# universe is automatically bounded with a correctly sized vacuum cell
+bound_dag_univ = openmc.DAGMCUniverse("dagmc.h5m").bounded_universe()
 
 my_geometry = openmc.Geometry(root=bound_dag_univ)
 
 
 # SIMULATION SETTINGS
 
-# Instantiate a Settings object
-my_settings = openmc.Settings()
-my_settings.batches = 10
-my_settings.inactive = 0  # the default is 10
-my_settings.particles = 1000
-my_settings.run_mode = "fixed source"
+# Instantiate a Settings object with parameters
+my_settings = openmc.Settings(batches=10, particles=1000, run_mode="fixed source")
 
 # Create a DT point source
 source = openmc.Source()
@@ -36,18 +31,14 @@ source.energy = openmc.stats.Discrete([14e6], [1])
 my_settings.source = source
 
 # sets up filters for the tallies
-neutron_particle_filter = openmc.ParticleFilter(["neutron"])
+particle_filter = openmc.ParticleFilter(["neutron"])
 energy_filter = openmc.EnergyFilter.from_group_structure("VITAMIN-J-175")
 material_filter = openmc.MaterialFilter(my_material)
 
 # create the tally
 cell_spectra_tally = openmc.Tally(name="cell_spectra_tally")
 cell_spectra_tally.scores = ["flux"]
-cell_spectra_tally.filters = [
-    material_filter,
-    neutron_particle_filter,
-    energy_filter,
-]
+cell_spectra_tally.filters = [material_filter, particle_filter, energy_filter]
 
 my_tallies = openmc.Tallies([cell_spectra_tally])
 

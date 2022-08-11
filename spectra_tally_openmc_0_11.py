@@ -85,18 +85,14 @@ VITAMIN_J_175_bins = [
 ]
 
 # sets up filters for the tallies
-neutron_particle_filter = openmc.ParticleFilter(["neutron"])
+particle_filter = openmc.ParticleFilter(["neutron"])
 energy_filter = openmc.EnergyFilter(values=VITAMIN_J_175_bins)
 material_filter = openmc.MaterialFilter(my_material)
 
 # create the tally
 cell_spectra_tally = openmc.Tally(name="cell_spectra_tally")
 cell_spectra_tally.scores = ["flux"]
-cell_spectra_tally.filters = [
-    material_filter,
-    neutron_particle_filter,
-    energy_filter,
-]
+cell_spectra_tally.filters = [material_filter, particle_filter, energy_filter]
 
 my_tallies = openmc.Tallies([cell_spectra_tally])
 
