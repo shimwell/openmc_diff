@@ -7,7 +7,6 @@ import openmc
 my_material = openmc.Material.from_library(name="Concrete, Portland")
 my_material.name = "mat1"  # renaming to match the contents of the dagmc h5m tags
 
-
 my_materials = openmc.Materials([my_material])
 
 
