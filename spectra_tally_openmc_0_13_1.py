@@ -3,13 +3,9 @@ import openmc
 
 # MATERIALS
 
-# defined from internal database
-#todo put this back once merged in
-# my_material = openmc.Material.from_library(name="Concrete, Portland")
-# my_material.name = "mat1"  # renaming to match the contents of the dagmc h5m tags
-my_material = openmc.Material(name="mat1")
-my_material.add_element("H", 0.168759, percent_type="ao")
-my_material.set_density("g/cm3", 2.3)
+# material defined from internal database
+my_material = openmc.Material.from_library(name="Concrete, Portland")
+my_material.name = "mat1"  # renaming to match the contents of the dagmc h5m tags
 
 
 my_materials = openmc.Materials([my_material])
@@ -25,11 +21,8 @@ my_geometry = openmc.Geometry(root=bound_dag_univ)
 
 # SIMULATION SETTINGS
 
-# Instantiate a Settings object with parameters
-my_settings = openmc.Settings()#batches=10, particles=1000, run_mode="fixed source")
-my_settings.batches=10
-my_settings.particles=1000
-my_settings.run_mode="fixed source"
+# Instantiate a Settings object with parameters in constructor
+my_settings = openmc.Settings(batches=10, particles=1000, run_mode="fixed source")
 
 # Create a DT point source
 source = openmc.Source()
