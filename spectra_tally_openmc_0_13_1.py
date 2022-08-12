@@ -26,7 +26,10 @@ my_geometry = openmc.Geometry(root=bound_dag_univ)
 # SIMULATION SETTINGS
 
 # Instantiate a Settings object with parameters
-my_settings = openmc.Settings(batches=10, particles=1000, run_mode="fixed source")
+my_settings = openmc.Settings()#batches=10, particles=1000, run_mode="fixed source")
+my_settings.batches=10
+my_settings.particles=1000
+my_settings.run_mode="fixed source"
 
 # Create a DT point source
 source = openmc.Source()
